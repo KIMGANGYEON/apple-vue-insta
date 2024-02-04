@@ -11,10 +11,21 @@
   </div>
 
   <h4>hello {{$store.state.name}}</h4>
-  <button @click="$store.state.name = 'park' ">push</button>
+  <h4>hello {{$store.state.age}}</h4>
+  <button @click="$store.commit('changeName')">button`</button>
+  <button @click="$store.commit('addAge',20)">button2`</button>
+  <!-- <button @click="$store.state.name = 'park' ">push</button> -->
+
+  <p>{{$store.state.more}}</p>
+  <button @click="$store.dispatch('getData')">more</button>
+
+  <p>{{name}} {{age}} {{likes}}</p>
 
   <Container @write="read = $event" :insta="insta" :step="step" :image="image"/>
   <button @click="more">more</button>
+
+  
+   
 
   <div class="footer">
     <ul class="footer-button-plus">
@@ -39,6 +50,7 @@
 import Container from './components/Container.vue'
 import postdata from './assets/postdata.js'
 import axios from 'axios'
+import { mapMutations, mapState } from 'vuex'
 // axios.post()
 
 
@@ -48,10 +60,11 @@ export default {
     return{
       insta : postdata,
       count : 0,
-      step : 0,
+      step : 4,
       image : '',
       read : '',
       cho : '',
+      counts : 0,
     }
   },
     mounted(){
@@ -64,8 +77,19 @@ export default {
   components: {
     Container : Container,
   },
+
+  computed : {
+    name(){
+      return this.$store.state.name
+    },
+    ...mapState(['name', 'age', 'likes']),
+    ...mapState({작명 : 'name'}),
+  },
+
   methods : {
+    ...mapMutations(['addAge']),
     
+
     more(){
       axios.get(`https://codingapple1.github.io/vue/more${this.count}.json`)
       .then((result) => {

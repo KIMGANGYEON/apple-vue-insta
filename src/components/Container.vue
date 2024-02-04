@@ -1,6 +1,5 @@
 <template>
-  <div>
-
+  
     <div v-if="step == 0">
       <Post :insta="insta[i]" v-for="(a,i) in insta" :key="i"/>
     </div>
@@ -25,13 +24,15 @@
   </div>
 </div>
  
-  
+ <div :class="cho" v-if="step == 4">
+  <MyPage :one="1"/>
 </div>
 </template>
 
 <script>
 import Post from './Posts.vue'
 import FilterBox from './FilterBox.vue'
+import MyPage from './MyPage.vue'
 
 export default {
     name : 'ContainerItem',
@@ -52,6 +53,8 @@ export default {
     components : {
          Post : Post,
          FilterBox,
+         MyPage,
+
     },
     props : {
         insta : Array,
